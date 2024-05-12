@@ -1,4 +1,4 @@
-# DataBank
+# Genshin DataBank
 原神数据统计分析（待开发）/Genshin data collecter（To be developed）
 **全角色基本数据**
 （
