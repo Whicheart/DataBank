@@ -1,197 +1,140 @@
-﻿#include <iostream>
+#include <iostream>
 #include <unordered_map>
-#include <random>
 #include <string>
 #include <vector>
-
-enum ArtifactSetName
-{
-	Empty = 0,//空圣遗物
-	Adventurer,//冒险家
-	LuckyDog,//幸运儿
-	TravelingDoctor,//游医
-	ResolutionOfSojourner,//行者之心
-	TinyMiracle,//奇迹
-	Berserker,//战狂
-	Instructor,//教官
-	TheExile,//流放者
-	DefendersWill,//守护之心
-	BraveHeart,//勇者之心
-	MartialArtist,//武人
-	Gambler,//赌徒
-	Scholar,//学士
-	PrayersForIllumination,//祭火之人
-	PrayersForDestiny,//祭水之人
-	PrayersForWisdom,//祭雷之人
-	PrayersToSpringtime,//祭冰之人
-	BlizzardStrayer,//冰风迷途的勇士
-	Thundersoother,//平息鸣雷的尊者
-	Lavawalker,//渡过烈火的贤人
-	MaidenBeloved,//被怜爱的少女
-	GladiatorsFinale,//角斗士的终幕礼
-	ViridescentVenerer,//翠绿之影
-	WanderersTroupe,//流浪大地的乐团
-	ThunderingFury,//如雷的盛怒
-	CrimsonWitchOfFlames,//炽烈的炎之魔女
-	NoblesseOblige,//昔日宗室之仪
-	BloodstainedChivalry,//染血的骑士道
-	ArchaicPetra,//幽古的磐岩
-	RetracingBloide,//逆飞的流星
-	HeartOfDepth,//沉沦之心
-	TenacityOfTheMillelith,//千岩牢固
-	PaleFlame,//苍白之火
-	ShimenawasReminiscence,//追忆之注连
-	EmblemOfSeveredFate,//绝缘之旗印
-	HuskOfOpulentDreams,//华馆梦醒形骸记
-	OceanHuedClam,//海染砗磲
-	VermillonHereafter,//辰砂往生录
-	EchoesOfAnOffering,//来歆余响
-	DeepwoodMemories,//深林的记忆
-	GildedDreams,//饰金之梦
-	DesertPavilionChronicle,//沙上楼阁史话
-	FlowerOfParadiseLost,//乐园遗落之花
-	NymphsDream,//水仙之梦
-	VourukashasGlow,//花海甘露之光
-	MarechausseeHunter,//逐影猎人
-	GoldenTroupe,//黄金剧团
-	SongOfDaysPast,//昔时之歌
-	NighttimeWhispersInTheEchoingWoods,//回声之林夜话
-	FragmentOfHarmonicWhimsy,//谐律异想断章
-	UnfinishedReverie,//未竟的遐思
-	ArtifactSetCount,//枚举数量
-};
-
-enum ArtifactPosition
-{
-	Flower = 0,
-	Feather,
-	Sand,
-	Goblet,
-	Head,
-	ArtifactPositionCount,
-};
-
-std::unordered_map<ArtifactSetName, std::string> ArtifactSetName_ToString =
-{
-	{ArtifactSetName::Empty, "空圣遗物"},
-	{ArtifactSetName::Adventurer, "冒险家"},
-	{ArtifactSetName::LuckyDog, "幸运儿"},
-	{ArtifactSetName::TravelingDoctor, "游医"},
-	{ArtifactSetName::ResolutionOfSojourner, "行者之心"},
-	{ArtifactSetName::TinyMiracle, "奇迹"},
-	{ArtifactSetName::Berserker, "战狂"},
-	{ArtifactSetName::Instructor, "教官"},
-	{ArtifactSetName::TheExile, "流放者"},
-	{ArtifactSetName::DefendersWill, "守护之心"},
-	{ArtifactSetName::BraveHeart, "勇者之心"},
-	{ArtifactSetName::MartialArtist, "武人"},
-	{ArtifactSetName::Gambler, "赌徒"},
-	{ArtifactSetName::Scholar, "学士"},
-	{ArtifactSetName::PrayersForIllumination, "祭火之人"},
-	{ArtifactSetName::PrayersForDestiny, "祭水之人"},
-	{ArtifactSetName::PrayersForWisdom, "祭雷之人"},
-	{ArtifactSetName::PrayersToSpringtime, "祭冰之人"},
-	{ArtifactSetName::BlizzardStrayer, "冰风迷途的勇士"},
-	{ArtifactSetName::Thundersoother, "平息鸣雷的尊者"},
-	{ArtifactSetName::Lavawalker, "渡过烈火的贤人"},
-	{ArtifactSetName::MaidenBeloved, "被怜爱的少女"},
-	{ArtifactSetName::GladiatorsFinale, "角斗士的终幕礼"},
-	{ArtifactSetName::ViridescentVenerer, "翠绿之影"},
-	{ArtifactSetName::WanderersTroupe, "流浪大地的乐团"},
-	{ArtifactSetName::ThunderingFury, "如雷的盛怒"},
-	{ArtifactSetName::CrimsonWitchOfFlames, "炽烈的炎之魔女"},
-	{ArtifactSetName::NoblesseOblige, "昔日宗室之仪"},
-	{ArtifactSetName::BloodstainedChivalry, "染血的骑士道"},
-	{ArtifactSetName::ArchaicPetra, "幽古的磐岩"},
-	{ArtifactSetName::RetracingBloide, "逆飞的流星"},
-	{ArtifactSetName::HeartOfDepth, "沉沦之心"},
-	{ArtifactSetName::TenacityOfTheMillelith, "千岩牢固"},
-	{ArtifactSetName::PaleFlame, "苍白之火"},
-	{ArtifactSetName::ShimenawasReminiscence, "追忆之注连"},
-	{ArtifactSetName::EmblemOfSeveredFate, "绝缘之旗印"},
-	{ArtifactSetName::HuskOfOpulentDreams, "华馆梦醒形骸记"},
-	{ArtifactSetName::OceanHuedClam, "海染砗磲"},
-	{ArtifactSetName::VermillonHereafter, "辰砂往生录"},
-	{ArtifactSetName::EchoesOfAnOffering, "来歆余响"},
-	{ArtifactSetName::DeepwoodMemories, "深林的记忆"},
-	{ArtifactSetName::GildedDreams, "饰金之梦"},
-	{ArtifactSetName::DesertPavilionChronicle, "沙上楼阁史话"},
-	{ArtifactSetName::FlowerOfParadiseLost, "乐园遗落之花"},
-	{ArtifactSetName::NymphsDream, "水仙之梦"},
-	{ArtifactSetName::VourukashasGlow, "花海甘露之光"},
-	{ArtifactSetName::MarechausseeHunter, "逐影猎人"},
-	{ArtifactSetName::GoldenTroupe, "黄金剧团"},
-	{ArtifactSetName::SongOfDaysPast, "昔时之歌"},
-	{ArtifactSetName::NighttimeWhispersInTheEchoingWoods, "回声之林夜话"},
-	{ArtifactSetName::FragmentOfHarmonicWhimsy, "谐律异想断章"},
-	{ArtifactSetName::UnfinishedReverie, "未竟的遐思"}
-};
-
-std::unordered_map<ArtifactPosition, std::string> ArtifactPosition_ToString =
-{
-	{ArtifactPosition::Flower, "生之花"},
-	{ArtifactPosition::Feather, "死之羽"},
-	{ArtifactPosition::Sand, "时之沙"},
-	{ArtifactPosition::Goblet, "空之杯"},
-	{ArtifactPosition::Head, "礼之冠"},
-};
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 class Artifact
 {
 public:
-	std::string Name = " ";
-	std::string Set = " ";
-	std::string Position = " ";
-	int Star = 5;
-	std::string MainStat = " ";
-	std::string SubStat = " ";
+	std::string SetName;
+	std::string Position;
+	std::string mainTagName;
+	float mainTagValue;
+	std::string normalTags;
+	int level;
+	int star;
+	std::string equip;
 	int id;
-
-	void setSetName(ArtifactSetName setName)
-	{
-		Set = ArtifactSetName_ToString.at(setName);
-	}
-
-	void setPosition(ArtifactPosition position)
-	{
-		Position = ArtifactPosition_ToString.at(position);
-	}
 };
 
-void printArtifact(const Artifact& artifact)
-{
-	/*std::cout << artifact.Name << std::endl;*/
-	std::cout << artifact.Set << std::endl;
-	std::cout << artifact.Position << std::endl;
-	std::cout << std::endl;
-	/*std::cout << artifact.Star << std::endl;
-	std::cout << artifact.MainStat << std::endl;
-	std::cout << artifact.SubStat << std::endl;*/
-}
-
 int main()
-{
-	Artifact A;
-	for (int i = 0; i < 50; i++) {
-		std::random_device rdset;
-		std::mt19937 gen(rdset());
-		std::uniform_int_distribution<> dis(0, ArtifactSetCount - 1);
+{ 
+    std::ifstream i("C:\\Users\\Administrator\\Desktop\\Yas\\mona.json");
+    nlohmann::json j;
+    i >> j;
 
-		std::random_device rdpst;
-		std::mt19937 gena(rdpst());
-		std::uniform_int_distribution<> disa(0, ArtifactPositionCount - 1);
+    i.close();
 
-		ArtifactSetName randomSetName = static_cast<ArtifactSetName>(dis(gen));
-		A.setSetName(randomSetName);
+    std::cout << "Version: " << j["version"] << std::endl;
+    std::cout << std::endl;
 
-		ArtifactPosition randomPosition = static_cast<ArtifactPosition>(disa(gena));
-		A.setPosition(randomPosition);
+    for (const auto& flower : j["flower"]) {
+        std::cout << "套装: " << flower["setName"] << std::endl;
+        std::cout << "部位: " << flower["position"] << std::endl;
 
-		printArtifact(A);
-	}
+        
+        std::cout << "主词条名称: " << flower["mainTag"]["name"] << std::endl;
+        std::cout << "数值: " << flower["mainTag"]["value"] << std::endl;
 
-	
-	
+        
+        std::cout << "副词条:" << std::endl;
+        for (const auto& tag : flower["normalTags"]) {
+            std::cout << "  名称: " << tag["name"] << ", 数值: " << tag["value"] << std::endl;
+        }
+
+         
+        std::cout << "Omit: " << (flower["omit"] ? "true" : "false") << std::endl;
+        std::cout << "等级: " << flower["level"] << std::endl;
+        std::cout << "星级: " << flower["star"] << std::endl;
+        /*std::cout << "属于: " << flower["equip"].get_ref<const std::string&>() << std::endl;*/
+        std::cout << std::endl;
+    }
+
+    for (const auto& feather : j["feather"]) {
+        std::cout << "套装: " << feather["setName"] << std::endl;
+        std::cout << "部位: " << feather["position"] << std::endl;
+
+
+        std::cout << "主词条名称: " << feather["mainTag"]["name"] << std::endl;
+        std::cout << "数值: " << feather["mainTag"]["value"] << std::endl;
+
+
+        std::cout << "副词条:" << std::endl;
+        for (const auto& tag : feather["normalTags"]) {
+            std::cout << "  名称: " << tag["name"] << ", 数值: " << tag["value"] << std::endl;
+        }
+
+
+        std::cout << "Omit: " << (feather["omit"] ? "true" : "false") << std::endl;
+        std::cout << "等级: " << feather["level"] << std::endl;
+        std::cout << "星级: " << feather["star"] << std::endl;
+        std::cout << std::endl;
+    }
+
+    for (const auto& sand : j["sand"]) {
+        std::cout << "套装: " << sand["setName"] << std::endl;
+        std::cout << "部位: " << sand["position"] << std::endl;
+
+
+        std::cout << "主词条名称: " << sand["mainTag"]["name"] << std::endl;
+        std::cout << "数值: " << sand["mainTag"]["value"] << std::endl;
+
+
+        std::cout << "副词条:" << std::endl;
+        for (const auto& tag : sand["normalTags"]) {
+            std::cout << "  名称: " << tag["name"] << ", 数值: " << tag["value"] << std::endl;
+        }
+
+
+        std::cout << "Omit: " << (sand["omit"] ? "true" : "false") << std::endl;
+        std::cout << "等级: " << sand["level"] << std::endl;
+        std::cout << "星级: " << sand["star"] << std::endl;
+        std::cout << std::endl;
+    }
+
+    for (const auto& cup : j["cup"]) {
+        std::cout << "套装: " << cup["setName"] << std::endl;
+        std::cout << "部位: " << cup["position"] << std::endl;
+
+
+        std::cout << "主词条名称: " << cup["mainTag"]["name"] << std::endl;
+        std::cout << "数值: " << cup["mainTag"]["value"] << std::endl;
+
+
+        std::cout << "副词条:" << std::endl;
+        for (const auto& tag : cup["normalTags"]) {
+            std::cout << "  名称: " << tag["name"] << ", 数值: " << tag["value"] << std::endl;
+        }
+
+
+        std::cout << "Omit: " << (cup["omit"] ? "true" : "false") << std::endl;
+        std::cout << "等级: " << cup["level"] << std::endl;
+        std::cout << "星级: " << cup["star"] << std::endl;
+        std::cout << std::endl;
+    }
+
+    for (const auto& head : j["head"]) {
+        std::cout << "套装: " << head["setName"] << std::endl;
+        std::cout << "部位: " << head["position"] << std::endl;
+
+
+        std::cout << "主词条名称: " << head["mainTag"]["name"] << std::endl;
+        std::cout << "数值: " << head["mainTag"]["value"] << std::endl;
+
+
+        std::cout << "副词条:" << std::endl;
+        for (const auto& tag : head["normalTags"]) {
+            std::cout << "  名称: " << tag["name"] << ", 数值: " << tag["value"] << std::endl;
+        }
+
+
+        std::cout << "Omit: " << (head["omit"] ? "true" : "false") << std::endl;
+        std::cout << "等级: " << head["level"] << std::endl;
+        std::cout << "星级: " << head["star"] << std::endl;
+        std::cout << std::endl;
+    }
 
 	return 0;
 }
